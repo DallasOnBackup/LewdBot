@@ -15,69 +15,52 @@ app.listen(port)
 // Client Login
 client.login(process.env.Token).catch(console.error)
 
+function commandParse(msg, embed, cmd) {
+  if (!msg.channel.nsfw && cmd != "help") {
+    embed.setTitle("NSFW Channel Required!")
+    .setDescription("Please enable NSFW to use lewd commands!")
+
+    message.channel.send(embed)
+    return false
+  }
+  if (msg.content.toLowerCase().startsWith(pre + cmd)) {
+    return true
+  } else {
+    return false
+  }
+}
+
 // Main Bot Code
 client.on('message', async message => {
   const embed = new Discord.MessageEmbed()
+  .setColor()
 
-  if (message.content.startsWith(`${pre}hentai spam`)) {
-    if (message.channel.nsfw) {
-      for (i = 0; i <= 10; i++) {
-        let hentai = await anime.hentai()
-        message.channel.send(hentai)
-      }
-    } else {
-      message.channel.send("Please enable NSFW to use this command!")
-    }
-  }
-  if (message.content.startsWith(`${pre}hentai`)) {
-    if (message.channel.nsfw) {
-      let hentai = await anime.hentai()
-      message.channel.send(hentai)
-    } else {
-      message.channel.send("Please enable NSFW to use this command!")
-    }
-  } if (message.content.startsWith(`${pre}thighs`)) {
-    if (message.channel.nsfw) {
-      let thighs = await anime.thighs()
-      message.channel.send(thighs)
-    } else {
-      message.channel.send("Please enable NSFW to use this command!")
-    }
-  } if (message.content.startsWith(`${pre}swimsuit`)) {
-    if (message.channel.nsfw) {
-      let swimsuit = await anime.swimsuit()
-      message.channel.send(swimsuit)
-    } else {
-      message.channel.send("Please enable NSFW to use this command!")
-    }
-  } if (message.content.startsWith(`${pre}hanal`)) {
-    if (message.channel.nsfw) {
-      let hanal = await anime.hanal()
-      message.channel.send(hanal)
-    } else {
-      message.channel.send("Please enable NSFW to use this command!")
-    }
-  } if (message.content.startsWith(`${pre}neko`)) {
-    if (message.channel.nsfw) {
-      let neko = await anime.neko()
-      message.channel.send(neko)
-    } else {
-      message.channel.send("Please enable NSFW to use this command!")
-    }
-  } if (message.content.startsWith(`${pre}kistsune`)) {
-    if (message.channel.nsfw) {
-      let kistsune = await anime.kistsune()
-      message.channel.send(kistsune)
-    } else {
-      message.channel.send("Please enable NSFW to use this command!")
-    }
-  } if (message.content.startsWith(`${pre}holo`)) {
-    if (message.channel.nsfw) {
-      let holo = await anime.holo()
-      message.channel.send(holo)
-    } else {
-      message.channel.send("Please enable NSFW to use this command!")
-    }
+  if (commandParse(message, embed, "hentai")) {
+    let hentai = await anime.hentai()
+    message.channel.send(hentai)
+  } if (commandParse(message, embed, "thighs")) {
+    let thighs = await anime.thighs()
+    message.channel.send(thighs)
+  } if (commandParse(message, embed, "swimsuit")) {
+    let swimsuit = await anime.swimsuit()
+    message.channel.send(swimsuit)
+  } if (commandParse(message, embed, "hanal")) {
+    let hanal = await anime.hanal()
+    message.channel.send(hanal)
+  } if (commandParse(message, embed, "neko")) {
+    let neko = await anime.neko()
+    message.channel.send(neko)
+  } if (commandParse(message, embed, "kistsune")) {
+    let kistsune = await anime.kistsune()
+    message.channel.send(kistsune)
+  } if (commandParse(message, embed, "holo")) {
+    let holo = await anime.holo()
+    message.channel.send(holo)
+  } if (commandParse(message, embed, "help")) {
+    embed.setTitle("Command List")
+    .setDescription(`${pre}hentai \n ${pre}thighs \n ${pre}hanal \n ${pre}neko \n ${pre}holo`)
+
+    message.channel.send(embed)
   }
 })
 
